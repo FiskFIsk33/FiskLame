@@ -24,6 +24,7 @@ public class Converter {
 
     private File[] files;
     private File dir;
+    private int quality = 0;
 
     public boolean convert(File f)throws Exception {
             String lamePath = LameExe.getPath();
@@ -33,14 +34,19 @@ public class Converter {
             
             
                     
-            Process p = Runtime.getRuntime().exec("cmd /C start " + lamePath + " -V0 \"" + f + "\" \"" + dir + "\\" + newName + "\"");
-            System.out.println("cmd /C start " + lamePath + " -V0 \"" + f + "\" \"" + dir + "\\" + newName + "\"");
+            Process p = Runtime.getRuntime().exec("cmd /C start " + lamePath + " -V"+quality+" -q0 \"" + f + "\" \"" + dir + "\\" + newName + "\"");
+            System.out.println("cmd /C start " + lamePath + " -V"+quality+" \"" + f + "\" \"" + dir + "\\" + newName + "\"");
         return true;
     }
 
     public void setFiles(File[] files) {
         this.files = files;
     }
+    
+    public void setQuality(int q) {
+        this.quality = q;
+    }
+    
 
     public void setDir(File dir) {
         this.dir = dir;

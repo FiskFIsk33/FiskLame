@@ -1,5 +1,6 @@
 package fisklame;
 
+import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,7 +12,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class MainWindow extends javax.swing.JFrame {
     
     private Converter conv;
-    
+    boolean more = false;
 
     /**
      * Creates new form MainWindow
@@ -19,6 +20,8 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         conv = new Converter();
+        qualPanel.setVisible(more);
+        this.setSize(new Dimension(450, 279));
     }
 
     /**
@@ -32,6 +35,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         jDialog1 = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        qualityGroup = new javax.swing.ButtonGroup();
         jButton2 = new javax.swing.JButton();
         filesLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -39,6 +45,13 @@ public class MainWindow extends javax.swing.JFrame {
         goBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        moreBtn = new javax.swing.JToggleButton();
+        qualPanel = new javax.swing.JPanel();
+        qualLabel = new javax.swing.JLabel();
+        qualBtnHigh = new javax.swing.JRadioButton();
+        qualBtnMed = new javax.swing.JRadioButton();
+        qualBtnLow = new javax.swing.JRadioButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Some problem occured");
@@ -60,9 +73,21 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(43, 43, 43))
         );
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("FiskLame");
-        setResizable(false);
 
         jButton2.setText("Choose files to convert");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -96,6 +121,75 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel3.setText("<^><");
 
+        moreBtn.setText("More");
+        moreBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moreBtnActionPerformed(evt);
+            }
+        });
+
+        qualPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        qualLabel.setText("Quality");
+
+        qualityGroup.add(qualBtnHigh);
+        qualBtnHigh.setSelected(true);
+        qualBtnHigh.setText("High (default)");
+        qualBtnHigh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qualBtnHighActionPerformed(evt);
+            }
+        });
+
+        qualityGroup.add(qualBtnMed);
+        qualBtnMed.setText("Medium");
+        qualBtnMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qualBtnMedActionPerformed(evt);
+            }
+        });
+
+        qualityGroup.add(qualBtnLow);
+        qualBtnLow.setText("Low");
+        qualBtnLow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                qualBtnLowActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout qualPanelLayout = new javax.swing.GroupLayout(qualPanel);
+        qualPanel.setLayout(qualPanelLayout);
+        qualPanelLayout.setHorizontalGroup(
+            qualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(qualPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(qualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(qualPanelLayout.createSequentialGroup()
+                        .addComponent(qualBtnHigh)
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addGroup(qualPanelLayout.createSequentialGroup()
+                        .addGroup(qualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(qualBtnLow)
+                            .addGroup(qualPanelLayout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(qualLabel))
+                            .addComponent(qualBtnMed))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        qualPanelLayout.setVerticalGroup(
+            qualPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(qualPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(qualLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qualBtnHigh)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qualBtnMed)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qualBtnLow)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,21 +197,39 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(destLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(filesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(destLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(filesLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))))
+                        .addGap(99, 99, 99))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(moreBtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(184, 184, 184)
                 .addComponent(goBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addComponent(qualPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,12 +244,16 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(destLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(goBtn)
-                        .addContainerGap())
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGap(18, 18, 18)
+                .addComponent(goBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(moreBtn)
+                .addGap(18, 18, 18)
+                .addComponent(qualPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3))
         );
 
         pack();
@@ -187,9 +303,35 @@ public class MainWindow extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_goBtnActionPerformed
+
+    private void qualBtnHighActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualBtnHighActionPerformed
+        conv.setQuality(0);
+    }//GEN-LAST:event_qualBtnHighActionPerformed
+
+    private void qualBtnMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualBtnMedActionPerformed
+        conv.setQuality(2);
+    }//GEN-LAST:event_qualBtnMedActionPerformed
+
+    private void qualBtnLowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qualBtnLowActionPerformed
+        conv.setQuality(4);
+    }//GEN-LAST:event_qualBtnLowActionPerformed
+
+    private void moreBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moreBtnActionPerformed
+        more = !more;
+        qualPanel.setVisible(more);
+        Dimension size;
+        if(more){
+            size = new Dimension(450, 390);
+            this.setSize(size);
+        }else{
+            size = new Dimension(450, 279);
+            this.setSize(size);
+            
+        }
+    }//GEN-LAST:event_moreBtnActionPerformed
     
     private void toggleGoBtn() {
-            goBtn.setEnabled(conv.ready());
+        goBtn.setEnabled(conv.ready());
     }
 
     
@@ -240,5 +382,15 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JToggleButton moreBtn;
+    private javax.swing.JRadioButton qualBtnHigh;
+    private javax.swing.JRadioButton qualBtnLow;
+    private javax.swing.JRadioButton qualBtnMed;
+    private javax.swing.JLabel qualLabel;
+    private javax.swing.JPanel qualPanel;
+    private javax.swing.ButtonGroup qualityGroup;
     // End of variables declaration//GEN-END:variables
 }
